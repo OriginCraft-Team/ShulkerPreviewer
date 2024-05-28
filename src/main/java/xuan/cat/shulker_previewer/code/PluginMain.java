@@ -99,7 +99,7 @@ public final class PluginMain extends JavaPlugin {
                         lore.put(group, line.append(component));
                     });
             block.lore(new ArrayList<>(lore.values()));
-            block.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
+            block.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS); // TODO 1.20.6 ~ block.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
             item.setItemMeta(block);
             return item;
         }
