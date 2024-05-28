@@ -1,6 +1,7 @@
 package xuan.cat.shulker_previewer.code;
 
 import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
@@ -22,7 +23,6 @@ import java.util.stream.Stream;
 import static com.comphenix.protocol.PacketType.Play.Server.SET_SLOT;
 import static com.comphenix.protocol.PacketType.Play.Server.WINDOW_ITEMS;
 import static com.comphenix.protocol.ProtocolLibrary.getProtocolManager;
-import static com.comphenix.protocol.events.ListenerPriority.MONITOR;
 import static java.util.Objects.requireNonNullElseGet;
 import static net.kyori.adventure.text.Component.text;
 import static net.kyori.adventure.text.Component.translatable;
@@ -49,7 +49,7 @@ public final class PluginMain extends JavaPlugin {
 
     private static final class PacketListen extends PacketAdapter {
         public PacketListen(@NotNull Plugin plugin) {
-            super(plugin, MONITOR, SET_SLOT, WINDOW_ITEMS);
+            super(plugin, ListenerPriority.MONITOR, SET_SLOT, WINDOW_ITEMS);
         }
 
         @Override
