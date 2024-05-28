@@ -84,7 +84,7 @@ public final class PluginMain extends JavaPlugin {
                         } else {
                             component = material;
                         }
-                        if ((meta.hasMaxStackSize() ? meta.getMaxStackSize() : content.getType().getMaxStackSize()) > 1) {
+                        if (content.getType().getMaxStackSize() > 1) { // TODO 1.20.6 ~ if ((meta.hasMaxStackSize() ? meta.getMaxStackSize() : content.getType().getMaxStackSize()) > 1) {
                             component = component.append(text(" x" + content.getAmount()));
                         }
                         return component;
