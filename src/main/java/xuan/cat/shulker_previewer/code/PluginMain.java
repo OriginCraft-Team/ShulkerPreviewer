@@ -77,7 +77,7 @@ public final class PluginMain extends JavaPlugin {
                     .filter(content -> !content.isEmpty())
                     .map(content -> {
                         ItemMeta meta = content.getItemMeta();
-                        Component material = meta.hasItemName() ? meta.itemName() : translatable(content.getType().translationKey());
+                        Component material = translatable(content.getType().translationKey()); // TODO 1.20.6 ~ meta.hasItemName() ? meta.itemName() : translatable(content.getType().translationKey());
                         Component component;
                         if (meta.hasDisplayName()) {
                             component = requireNonNullElseGet(meta.displayName(), () -> text("")).append(text(" (").append(material).append(text(")")).decoration(ITALIC, true));
