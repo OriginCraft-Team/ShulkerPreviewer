@@ -115,7 +115,7 @@ public final class PluginMain extends JavaPlugin {
                     .filter(component -> !component.children(List.of()).equals(LINE_START))
                     .collect(Collectors.toList());
             if (!merger.isEmpty()) {
-                merger.add(LINE_START);
+                merger.addFirst(LINE_START);
             }
             lore.values()
                     .stream()
