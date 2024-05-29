@@ -113,7 +113,7 @@ public final class PluginMain extends JavaPlugin {
             if (!merger.isEmpty()) {
                 merger.add(LINE_START);
             }
-            merger.addAll(lore.values());
+            lore.values().forEach(merger::addFirst);
             block.lore(merger);
             block.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS); // TODO 1.20.6 ~ block.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
             item.setItemMeta(block);
