@@ -35,7 +35,10 @@ import static net.kyori.adventure.text.format.NamedTextColor.WHITE;
 import static net.kyori.adventure.text.format.TextDecoration.ITALIC;
 
 public final class PluginMain extends JavaPlugin {
-    private static final @NotNull TranslatableComponent LINE_START = translatable("", text("ShulkerPreviewerLore")).color(WHITE).decoration(ITALIC, false);
+    private static final @NotNull TranslatableComponent LINE_START = translatable("", text("ShulkerPreviewerLore"))
+            .color(WHITE)
+            .decoration(ITALIC, false)
+            .children(List.of());
     private static final int LINE_ITEMS = 4;
 
     private @Nullable PacketListen listen;
@@ -109,7 +112,8 @@ public final class PluginMain extends JavaPlugin {
             List<Component> merger = requireNonNullElseGet(block.lore(), List::of)
                     .stream()
                     .map(component -> (Component) component)
-                    .filter(component -> !component.equals(LINE_START)).collect(Collectors.toList());
+                    .filter(component -> !component.children(List.of()).equals(LINE_START))
+                    .collect(Collectors.toList());
             if (!merger.isEmpty()) {
                 merger.add(LINE_START);
             }
