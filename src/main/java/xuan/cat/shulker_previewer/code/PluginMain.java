@@ -25,6 +25,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.comphenix.protocol.PacketType.Play.Client.SET_CREATIVE_SLOT;
 import static com.comphenix.protocol.PacketType.Play.Server.SET_SLOT;
 import static com.comphenix.protocol.PacketType.Play.Server.WINDOW_ITEMS;
 import static com.comphenix.protocol.ProtocolLibrary.getProtocolManager;
@@ -60,7 +61,7 @@ public final class PluginMain extends JavaPlugin {
 
     private static final class PacketListen extends PacketAdapter {
         public PacketListen(@NotNull Plugin plugin) {
-            super(plugin, ListenerPriority.MONITOR, SET_SLOT, WINDOW_ITEMS);
+            super(plugin, ListenerPriority.MONITOR, SET_SLOT, WINDOW_ITEMS, SET_CREATIVE_SLOT);
         }
 
         @Override
@@ -72,18 +73,24 @@ public final class PluginMain extends JavaPlugin {
             } else if (type.equals(WINDOW_ITEMS)) {
                 StructureModifier<List<ItemStack>> modifier = event.getPacket().getItemListModifier();
                 modifier.write(0, modifier.read(0).stream().map(PacketListen::replaceItems).toList());
+            } else if (type.equals(SET_CREATIVE_SLOT)) {
+                StructureModifier<ItemStack> modifier = event.getPacket().getItemModifier();
+                modifier.write(0, replaceItems(modifier.read(0), false));
             } else {
                 throw new RuntimeException("Strange handling");
             }
         }
 
         private static @Nullable ItemStack replaceItems(@Nullable ItemStack item) {
+            return replaceItems(item, true);
+        }
+        private static @Nullable ItemStack replaceItems(@Nullable ItemStack item, boolean write) {
             if (item == null || item.isEmpty() || !(item.getItemMeta() instanceof BlockStateMeta block) || !block.hasBlockState() || !(block.getBlockState() instanceof ShulkerBox box)) {
                 return item;
             }
             AtomicInteger count = new AtomicInteger();
             Map<Integer, Component> lore = new LinkedHashMap<>();
-            Stream.of(box.getInventory().getStorageContents())
+            Stream.of(write ? box.getInventory().getStorageContents() : new ItemStack[0])
                     .filter(Objects::nonNull)
                     .filter(content -> !content.isEmpty())
                     .map(content -> {
@@ -114,7 +121,7 @@ public final class PluginMain extends JavaPlugin {
                     .map(component -> (Component) component)
                     .filter(component -> !component.children(List.of()).equals(LINE_START))
                     .collect(Collectors.toList());
-            if (!merger.isEmpty()) {
+            if (!merger.isEmpty() && !lore.isEmpty()) {
                 merger.addFirst(LINE_START);
             }
             lore.values()
