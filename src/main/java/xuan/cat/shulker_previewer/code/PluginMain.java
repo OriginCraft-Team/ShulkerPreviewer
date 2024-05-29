@@ -6,6 +6,7 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.StructureModifier;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.TranslatableComponent;
 import org.bukkit.block.ShulkerBox;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -16,8 +17,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static com.comphenix.protocol.PacketType.Play.Server.SET_SLOT;
@@ -30,6 +35,7 @@ import static net.kyori.adventure.text.format.NamedTextColor.WHITE;
 import static net.kyori.adventure.text.format.TextDecoration.ITALIC;
 
 public final class PluginMain extends JavaPlugin {
+    private static final @NotNull TranslatableComponent LINE_START = translatable("", text("ShulkerPreviewerLore")).color(WHITE).decoration(ITALIC, false);
     private static final int LINE_ITEMS = 4;
 
     private @Nullable PacketListen listen;
@@ -94,13 +100,21 @@ public final class PluginMain extends JavaPlugin {
                     .forEach(component -> {
                         int index = count.getAndIncrement();
                         int group = index / LINE_ITEMS;
-                        Component line = lore.getOrDefault(group, text("").color(WHITE).decoration(ITALIC, false));
+                        Component line = lore.getOrDefault(group, LINE_START);
                         if (index % LINE_ITEMS > 0) {
                             line = line.append(text(" , "));
                         }
                         lore.put(group, line.append(component));
                     });
-            block.lore(new ArrayList<>(lore.values()));
+            List<Component> merger = requireNonNullElseGet(block.lore(), List::of)
+                    .stream()
+                    .map(component -> (Component) component)
+                    .filter(component -> !component.equals(LINE_START)).collect(Collectors.toList());
+            if (!merger.isEmpty()) {
+                merger.add(LINE_START);
+            }
+            merger.addAll(lore.values());
+            block.lore(merger);
             block.addItemFlags(ItemFlag.HIDE_ITEM_SPECIFICS); // TODO 1.20.6 ~ block.addItemFlags(ItemFlag.HIDE_ADDITIONAL_TOOLTIP);
             item.setItemMeta(block);
             return item;
