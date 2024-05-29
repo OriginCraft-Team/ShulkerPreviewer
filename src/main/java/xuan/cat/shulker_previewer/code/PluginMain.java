@@ -73,7 +73,15 @@ public final class PluginMain extends JavaPlugin {
             } else if (type.equals(WINDOW_ITEMS)) {
                 StructureModifier<List<ItemStack>> modifier = event.getPacket().getItemListModifier();
                 modifier.write(0, modifier.read(0).stream().map(PacketListen::replaceItems).toList());
-            } else if (type.equals(SET_CREATIVE_SLOT)) {
+            } else {
+                throw new RuntimeException("Strange handling");
+            }
+        }
+
+        @Override
+        public void onPacketReceiving(PacketEvent event) {
+            PacketType type = event.getPacketType();
+            if (type.equals(SET_CREATIVE_SLOT)) {
                 StructureModifier<ItemStack> modifier = event.getPacket().getItemModifier();
                 modifier.write(0, replaceItems(modifier.read(0), false));
             } else {
