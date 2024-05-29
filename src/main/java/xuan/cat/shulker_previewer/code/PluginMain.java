@@ -30,6 +30,8 @@ import static net.kyori.adventure.text.format.NamedTextColor.WHITE;
 import static net.kyori.adventure.text.format.TextDecoration.ITALIC;
 
 public final class PluginMain extends JavaPlugin {
+    private static final int LINE_ITEMS = 4;
+
     private @Nullable PacketListen listen;
 
     @Override
@@ -80,7 +82,7 @@ public final class PluginMain extends JavaPlugin {
                         Component material = translatable(content.getType().translationKey()); // TODO 1.20.6 ~ meta.hasItemName() ? meta.itemName() : translatable(content.getType().translationKey());
                         Component component;
                         if (meta.hasDisplayName()) {
-                            component = requireNonNullElseGet(meta.displayName(), () -> text("")).append(text(" (").append(material).append(text(")")).decoration(ITALIC, true));
+                            component = requireNonNullElseGet(meta.displayName(), () -> text("")).append(text(" (").append(material).append(text(")")));
                         } else {
                             component = material;
                         }
@@ -91,10 +93,10 @@ public final class PluginMain extends JavaPlugin {
                     })
                     .forEach(component -> {
                         int index = count.getAndIncrement();
-                        int group = index / 5;
+                        int group = index / LINE_ITEMS;
                         Component line = lore.getOrDefault(group, text("").color(WHITE).decoration(ITALIC, false));
-                        if (index % 5 > 0) {
-                            line = line.append(text(", "));
+                        if (index % LINE_ITEMS > 0) {
+                            line = line.append(text(" , "));
                         }
                         lore.put(group, line.append(component));
                     });
