@@ -37,6 +37,7 @@ public final class ItemFormat {
                     placeholder = new StringBuilder();
                 } else if (placeholder.isEmpty()) {
                     buffer.append('%'); // %% == %
+                    placeholder = null;
                 } else {
                     Component arg = args.get(valueOf(placeholder).toLowerCase());
                     if (arg != null) {
