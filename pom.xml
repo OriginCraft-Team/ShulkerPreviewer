@@ -6,7 +6,7 @@
 
     <groupId>xuan.cat</groupId>
     <artifactId>ShulkerPreviewer</artifactId>
-    <version>1.0g</version>
+    <version>1.1a</version>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>

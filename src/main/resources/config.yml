@@ -1,0 +1,49 @@
+# 格式產生器
+#   %arg_name% 來表示佔位符號
+#   %% 表示為顯示 % 符號
+format:
+  # 當物品堆疊上限只有一個
+  single:
+    # 沒有改名的物品
+    item: "%material%"
+    # 有改名的物品
+    item-renamed: "%name% (%material%)"
+
+  # 當物品堆疊上限不只一個
+  multi:
+    # 沒有改名的物品
+    item: "%material% x%amount%"
+    # 有改名的物品
+    item-renamed: "%name% (%material%) x%amount%"
+
+  # 每個物品之間的分隔符號
+  separator: " , "
+  # 每行開始時要插入的字串
+  head: ""
+
+# 每行顯示幾個物品
+row-items: 5
+
+# 指令控制
+command:
+  # 預設顯示狀態
+  #   true = on
+  #   false = off
+  default: true
+
+  # 指令訊息
+  messages:
+    # 玩家使用指令切換顯示狀態為 on
+    to-on: "界伏盒預覽已開啟。"
+    # 玩家使用指令切換顯示狀態為 off
+    to-off: "界伏盒預覽已關閉。"
+    # 任何非玩家執行此指令時
+    non-player: "只能由一個玩家執行此指令。"
+    # 玩家輸入錯任何指令內容時
+    need-help: "使用方法：/shulkerview <on/off>"
+    # 輸入 /shulkerview reload 時
+    do-reload: "已成功加載配置文件。"
+    # 沒有權限時。
+    #   command.shulkerview.reload
+    #   command.shulkerview.switch
+    no-permission: "你沒有權限使用這個指令"
