@@ -9,10 +9,10 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import xuan.cat.shulker_previewer.code.PluginMain;
 
-public final class CommandSpecialExecutor implements CommandExecutor {
+public final class CommanderExecutor implements CommandExecutor {
     private final @NotNull PluginMain main;
 
-    public CommandSpecialExecutor(@NotNull PluginMain main) {
+    public CommanderExecutor(@NotNull PluginMain main) {
         this.main = main;
     }
 

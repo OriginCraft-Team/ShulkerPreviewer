@@ -6,8 +6,8 @@ import org.bukkit.command.PluginCommand;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import xuan.cat.shulker_previewer.code.command.CommandSpecialCompleter;
-import xuan.cat.shulker_previewer.code.command.CommandSpecialExecutor;
+import xuan.cat.shulker_previewer.code.command.CommanderCompleter;
+import xuan.cat.shulker_previewer.code.command.CommanderExecutor;
 import xuan.cat.shulker_previewer.code.config.GlobalConfig;
 
 import static com.comphenix.protocol.ProtocolLibrary.getProtocolManager;
@@ -29,8 +29,8 @@ public final class PluginMain extends JavaPlugin {
         if (command == null) {
             throw new RuntimeException("No registration command 'shulkerview' in plugin.yml");
         }
-        command.setExecutor(new CommandSpecialExecutor(this));
-        command.setTabCompleter(new CommandSpecialCompleter());
+        command.setExecutor(new CommanderExecutor(this));
+        command.setTabCompleter(new CommanderCompleter());
     }
 
     @Override

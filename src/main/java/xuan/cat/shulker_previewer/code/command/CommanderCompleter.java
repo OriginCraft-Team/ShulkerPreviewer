@@ -10,8 +10,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class CommandSpecialCompleter implements TabCompleter {
-    public CommandSpecialCompleter() {
+public final class CommanderCompleter implements TabCompleter {
+    public CommanderCompleter() {
     }
 
     @Override
