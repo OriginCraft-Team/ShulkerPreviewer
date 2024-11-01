@@ -1,11 +1,11 @@
 # ShulkerPreviewer | 界伏盒預覽
-遊戲版本：1.20 ~ 1.20.6
+遊戲版本：1.20+
 
 Spigot: https://www.spigotmc.org/resources/shulkerboxpreview.105258/<br>
 巴哈介紹: https://forum.gamer.com.tw/Co.php?bsn=18673&sn=1036868
 ---
 
-[Made for 輝煌伺服器.](https://discord.gg/5MHGpAFGEN "The Copyright of the entire source codes is owned by YT_iceice according to Article 10 the Copyright Law of the Republic of China.")
+[Made for 輝煌伺服器.](https://discord.gg/9c287zPpUZ)
 
 ## 📃 License | 開源許可證
 
