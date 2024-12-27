@@ -22,19 +22,29 @@ public final class GlobalConfig {
     public final @NotNull String commandMessagesNoPermission;
 
     public GlobalConfig(@NotNull Configuration config) {
-        formatSingleItem = new ItemFormat(config.getString("format.single.item", ""));
-        formatSingleItemRenamed = new ItemFormat(config.getString("format.single.item-renamed", ""));
-        formatMultiItem = new ItemFormat(config.getString("format.multi.item", ""));
-        formatMultiItemRenamed = new ItemFormat(config.getString("format.multi.item-renamed", ""));
-        formatSeparator = config.getString("format.separator", "");
-        formatHead = config.getString("format.head", "");
+        formatSingleItem = new ItemFormat(applyColorCodes(config.getString("format.single.item", "")));
+        formatSingleItemRenamed = new ItemFormat(applyColorCodes(config.getString("format.single.item-renamed", "")));
+        formatMultiItem = new ItemFormat(applyColorCodes(config.getString("format.multi.item", "")));
+        formatMultiItemRenamed = new ItemFormat(applyColorCodes(config.getString("format.multi.item-renamed", "")));
+        formatSeparator = applyColorCodes(config.getString("format.separator", ""));
+        formatHead = applyColorCodes(config.getString("format.head", ""));
         rowItems = max(1, config.getInt("row-items", 1));
         commandDefault = config.getBoolean("command.default", true);
-        commandMessagesToOn = config.getString("command.messages.to-on", "");
-        commandMessagesToOff = config.getString("command.messages.to-off", "");
-        commandMessagesNonPlayer = config.getString("command.messages.non-player", "");
-        commandMessagesNeedHelp = config.getString("command.messages.need-help", "");
-        commandMessagesDoReload = config.getString("command.messages.do-reload", "");
-        commandMessagesNoPermission = config.getString("command.messages.no-permission", "");
+        commandMessagesToOn = applyColorCodes(config.getString("command.messages.to-on", ""));
+        commandMessagesToOff = applyColorCodes(config.getString("command.messages.to-off", ""));
+        commandMessagesNonPlayer = applyColorCodes(config.getString("command.messages.non-player", ""));
+        commandMessagesNeedHelp = applyColorCodes(config.getString("command.messages.need-help", ""));
+        commandMessagesDoReload = applyColorCodes(config.getString("command.messages.do-reload", ""));
+        commandMessagesNoPermission = applyColorCodes(config.getString("command.messages.no-permission", ""));
+    }
+
+    /**
+     * 将&颜色代码转换为§颜色代码
+     *
+     * @param text 包含&颜色代码的字符串
+     * @return 转换后的字符串
+     */
+    private static @NotNull String applyColorCodes(@NotNull String text) {
+        return text.replace('&', '§');
     }
 }

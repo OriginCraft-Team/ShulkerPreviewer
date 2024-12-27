@@ -23,7 +23,8 @@ public final class CommanderCompleter implements TabCompleter {
                 list.add("reload");
             }
             if (sender.hasPermission("command.shulkerview.switch") && sender instanceof Player) {
-                list.addAll(List.of("on", "off"));
+//                list.addAll(List.of("on", "off"));
+                list.add("switch");
             }
             return list.stream().filter(str -> str.startsWith(args[0])).sorted(StringUtils::compareIgnoreCase).toList();
         } else {

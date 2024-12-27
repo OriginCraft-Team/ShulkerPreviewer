@@ -9,6 +9,8 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import xuan.cat.shulker_previewer.code.PluginMain;
 
+import static java.util.Objects.requireNonNullElseGet;
+
 public final class CommanderExecutor implements CommandExecutor {
     private final @NotNull PluginMain main;
 
@@ -32,14 +34,13 @@ public final class CommanderExecutor implements CommandExecutor {
                     sender.sendMessage(main.getGlobalConfig().commandMessagesNoPermission);
                 }
             }
-            case "on" -> doSwitch(sender, true);
-            case "off" -> doSwitch(sender, false);
+            case "switch" -> doSwitch(sender);
             default -> sender.sendMessage(main.getGlobalConfig().commandMessagesNeedHelp);
         }
         return true;
     }
 
-    private void doSwitch(@NotNull CommandSender sender, boolean to) {
+    private void doSwitch(@NotNull CommandSender sender) {
         if (!sender.hasPermission("command.shulkerview.switch")) {
             sender.sendMessage(main.getGlobalConfig().commandMessagesNoPermission);
             return;
@@ -48,6 +49,7 @@ public final class CommanderExecutor implements CommandExecutor {
             sender.sendMessage(main.getGlobalConfig().commandMessagesNonPlayer);
             return;
         }
+        boolean to = !player.getPersistentDataContainer().getOrDefault(main.statusKey, PersistentDataType.BOOLEAN, !main.getGlobalConfig().commandDefault);
         player.getPersistentDataContainer().set(main.statusKey, PersistentDataType.BOOLEAN, to);
         sender.sendMessage(to ? main.getGlobalConfig().commandMessagesToOn : main.getGlobalConfig().commandMessagesToOff);
         player.updateInventory();
