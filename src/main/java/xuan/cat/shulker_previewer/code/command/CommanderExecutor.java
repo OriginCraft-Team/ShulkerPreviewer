@@ -9,8 +9,6 @@ import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.NotNull;
 import xuan.cat.shulker_previewer.code.PluginMain;
 
-import static java.util.Objects.requireNonNullElseGet;
-
 public final class CommanderExecutor implements CommandExecutor {
     private final @NotNull PluginMain main;
 

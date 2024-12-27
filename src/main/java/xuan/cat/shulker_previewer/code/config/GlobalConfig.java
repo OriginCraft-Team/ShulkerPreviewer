@@ -38,12 +38,6 @@ public final class GlobalConfig {
         commandMessagesNoPermission = applyColorCodes(config.getString("command.messages.no-permission", ""));
     }
 
-    /**
-     * 将&颜色代码转换为§颜色代码
-     *
-     * @param text 包含&颜色代码的字符串
-     * @return 转换后的字符串
-     */
     private static @NotNull String applyColorCodes(@NotNull String text) {
         return text.replace('&', '§');
     }
