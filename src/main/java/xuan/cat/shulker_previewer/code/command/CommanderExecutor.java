@@ -47,7 +47,7 @@ public final class CommanderExecutor implements CommandExecutor {
             sender.sendMessage(main.getGlobalConfig().commandMessagesNonPlayer);
             return;
         }
-        boolean to = !player.getPersistentDataContainer().getOrDefault(main.statusKey, PersistentDataType.BOOLEAN, !main.getGlobalConfig().commandDefault);
+        boolean to = !player.getPersistentDataContainer().getOrDefault(main.statusKey, PersistentDataType.BOOLEAN, main.getGlobalConfig().commandDefault);
         player.getPersistentDataContainer().set(main.statusKey, PersistentDataType.BOOLEAN, to);
         sender.sendMessage(to ? main.getGlobalConfig().commandMessagesToOn : main.getGlobalConfig().commandMessagesToOff);
         player.updateInventory();
